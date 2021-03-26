@@ -51,7 +51,6 @@ public class ReportLog {
 				return;
 			}
 			
-			
 			Log.GuardaLog("[" + new Date() + "][" + vsUUI + "][ReportLog][INFO] ---> ******************** INICIANDO *******************");
 			Log.GuardaLog("[" + new Date() + "][" + vsUUI + "][ReportLog][INFO] ---> TOKEN SUCCESSFULLY");
 			HashMap<String, String> voHeader = new  HashMap<String, String>();
