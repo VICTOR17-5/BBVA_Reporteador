@@ -50,13 +50,13 @@ public class PureCloud {
         return vsAccessToken;
     }
 	
-	public String getBody(String vsFecha, String vsFechaInt) {
+	public String getBody(Integer viPag, String vsFecha, String vsFechaInt) {
 		return "{\r\n"
 				+ "	\"order\": \"desc\",\r\n"
 				+ "	\"orderBy\": \"conversationStart\",\r\n"
 				+ "	\"paging\": {\r\n"
 				+ "	\"pageSize\": 100,\r\n"
-				+ "	\"pageNumber\": 1\r\n"
+				+ "	\"pageNumber\": " + viPag + "\r\n"
 				+ "	}, \"segmentFilters\": [{\r\n"
 				+ "	\"type\": \"and\",\r\n"
 				+ "	\"predicates\": [{\r\n"
@@ -77,6 +77,24 @@ public class PureCloud {
 				+ "	\"tVoicemail\",\"tMonitoring\",\"tFlowOut\" ],\r\n"
 				+ "	\"interval\": \"" + vsFecha + "T06:00:00.000Z/" + vsFechaInt + "T06:00:00.000Z\"\r\n"
 				+ "}";
+	}
+	
+	public JSONObject getJSONError() {
+		return new JSONObject(
+				"{ "
+				+ "\"code\": \"method.incorrect\","
+				+ "\"message\": \"Metodo incorrecto.\","
+				+ "\"status\": 404"
+				+ "}");
+	}
+	
+	public JSONObject getJSONResponse(String vsCode, String vsMessage, Integer viStatus) {
+		return new JSONObject(
+				"{ "
+				+ "\"code\": \"" + vsCode + "\","
+				+ "\"message\": \"" + vsMessage + "\","
+				+ "\"status\": " + viStatus + ""
+				+ "}");
 	}
 
 }

@@ -64,8 +64,8 @@ public class Excel {
 	
 	public void createExcel(String vsPath) {
 		File voFile = new File(vsPath);
-		try (FileOutputStream outputStream = new FileOutputStream(voFile)){						
-			if (voFile.exists()) voFile.delete();
+		if (voFile.exists()) voFile.delete();
+		try (FileOutputStream outputStream = new FileOutputStream(voFile)) {			
 			workbook.write(outputStream);
 			outputStream.flush();
 			outputStream.close();
@@ -111,7 +111,8 @@ public class Excel {
 			voSBData.append("\n");
 		}
 		File voFile = new File(vsPath);
-		if (voFile.exists()) voFile.delete();
+		if(voFile.exists()) voFile.delete();
+		if(!voFile.getParentFile().exists()) voFile.mkdirs();
 		FileOutputStream fos;
 		try {
 			fos = new FileOutputStream(vsPath);

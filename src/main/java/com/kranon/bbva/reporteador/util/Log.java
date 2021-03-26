@@ -2,18 +2,14 @@ package com.kranon.bbva.reporteador.util;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class Log {
 	public static String vsRutaLog = "C:/Appl/BBVA/Reporteador/Logs/";
 	private static String ArchLog = "";
-	private static String vsFecha = "";
+	public static String vsFecha = "";
 	
 	public synchronized static void GuardaLog(String cadena) {
-		Calendar c = Calendar.getInstance();
-		vsFecha = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
-        ArchLog = vsFecha + ".log";
+        ArchLog = "LogReport_" + vsFecha + ".log";
         if (ArchLog != null) {
             PrintWriter pw = null;
             try {
