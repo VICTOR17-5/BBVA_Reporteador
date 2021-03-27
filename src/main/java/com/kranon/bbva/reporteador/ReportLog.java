@@ -21,7 +21,7 @@ import spark.Response;
 import spark.Spark;
 
 public class ReportLog {
-	private String[] vaConfi = {"client_id","client_secret","Log","portSpark"};
+	private String[] vaConfi = {"client_id","client_secret","Log","portSpark","HorarioVerano"};
 	
 	private final String vsURLPCDetails = "https://api.mypurecloud.com/api/v2/analytics/conversations/details/query";
 	private final String vsURLPCCall = "https://api.mypurecloud.com/api/v2/conversations/calls/";
@@ -75,19 +75,14 @@ public class ReportLog {
 		    	voStringBufferBC = new StringBuffer();
 		    	vsUUI = java.util.UUID.randomUUID().toString();
 		    	pc.setUUI(vsUUI);
-		    	
-		    	Log.GuardaLog("[" + new Date() + "][" + vsUUI + "][ReportLog][INFO] ---> ******************** REQUEST RECEIVED *******************");
-		    	Log.GuardaLog("[" + new Date() + "][" + vsUUI + "][ReportLog][INFO] ---> REQUEST[" + request.body().replace("\n", "") + "]");
-		    	
+
 		    	if(request.body().equals("")) {
-		    		Log.GuardaLog("[" + new Date() + "][" + vsUUI + "][ReportLog][INFO] ---> THE REQUEST IS EMPTY.");
 		    		response.status(400);
 		    		return pc.getJSONResponse("request.invalid", "The request is invalid.", 400);
 		    	}
 		    	
 		    	JSONObject voJSONRequest = new JSONObject(request.body());
 		    	if(!voJSONRequest.has("dateBegin") || !voJSONRequest.has("dateEnd") || !voJSONRequest.has("flowName")){
-		    		Log.GuardaLog("[" + new Date() + "][" + vsUUI + "][ReportLog][INFO] ---> THE REQUEST IS INCOMPLETE.");
 		    		response.status(400);
 		    		return pc.getJSONResponse("request.incomplete", "The request is invalid.", 400);
 		    	}
@@ -96,6 +91,8 @@ public class ReportLog {
 		    	vsFechaInicio = voJSONRequest.getString("dateBegin");
 		    	vsFechaFin = voJSONRequest.getString("dateEnd");
 		    	Log.vsFecha = vsFechaInicio;
+		    	Log.GuardaLog("[" + new Date() + "][" + vsUUI + "][ReportLog][INFO] ---> ******************** REQUEST RECEIVED *******************");
+		    	Log.GuardaLog("[" + new Date() + "][" + vsUUI + "][ReportLog][INFO] ---> REQUEST[" + request.body().replace("\n", "") + "]");
 		    	
 		    	Date voDateInicio = new SimpleDateFormat("yyyy-MM-dd").parse(vsFechaInicio);
 		    	Date voDateFin = new SimpleDateFormat("yyyy-MM-dd").parse(vsFechaFin);
@@ -120,6 +117,8 @@ public class ReportLog {
 		    		viPag++;
 		    		vlContactId = new ArrayList<String>();
 		    		Log.GuardaLog("[" + new Date() + "][" + vsUUI + "][ReportLog][INFO] ---> LOADING PAGE NUMBER [" + (viPag) + "]");
+		    		
+		    		pc.vsHorarioInterval = (vaConfi[4].contentEquals("true")) ? "T05:00:00.000Z" : "T06:00:00.000Z";
 		    		String vsBody = pc.getBody(viPag,vsFechaInicio,vsFechaFin);
 		    		
 					Log.GuardaLog("[" + new Date() + "][" + vsUUI + "][ReportLog][INFO] ---> ENDPOINT[" + vsURLPCDetails + "], REQUEST[" + vsBody.replace("\r\n", "") + "]");

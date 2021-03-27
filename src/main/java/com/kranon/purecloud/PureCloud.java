@@ -13,6 +13,8 @@ import com.kranon.conexionHttp.*;
 public class PureCloud {
 	private ConexionResponse conexionResponse = null;
 	private String vsUUI = "";
+	public String vsHorarioInterval = "T06:00:00.000Z";
+
 	
 	public void setUUI(String vsUUI) {
 		this.vsUUI = vsUUI;
@@ -75,7 +77,7 @@ public class PureCloud {
 				+ "	\"nTransferred\",\"tTalk\",\"tHeld\",\"nOutboundAttempted\",\"tContacting\",\"tDialing\",\"tHandle\",\r\n"
 				+ "	\"nBlindTransferred\",\"nConsult\",\"nConsultTransferred\",\"oMediaCount\",\"oExternalMediaCount\",\r\n"
 				+ "	\"tVoicemail\",\"tMonitoring\",\"tFlowOut\" ],\r\n"
-				+ "	\"interval\": \"" + vsFecha + "T06:00:00.000Z/" + vsFechaInt + "T06:00:00.000Z\"\r\n"
+				+ "	\"interval\": \"" + vsFecha + vsHorarioInterval + "/" + vsFechaInt + vsHorarioInterval + "\"\r\n"
 				+ "}";
 	}
 	
